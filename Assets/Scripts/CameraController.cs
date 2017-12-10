@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private Vector2 panLimit;
 	
-	void Update () {
+	void LateUpdate () {
 
         Vector3 pos = transform.position;
 

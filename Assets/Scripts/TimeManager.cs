@@ -4,19 +4,99 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour {
 
-    public static void ChangeTimeFactor(float timeFactor)
+    public int time;
+
+    bool isForward = false;
+    bool isBackward = false;
+    bool allTransitionDone = false;
+
+    List<AgentController> agents = new List<AgentController>();
+
+    private void FixedUpdate()
     {
-        Time.timeScale = timeFactor;
+
+        foreach(AgentController agent in agents)
+        {
+            allTransitionDone = agent.transitionDone;
+            if (!allTransitionDone)
+                break;
+        }
+
+        if (isForward)
+        {
+            OneStepForward();                
+        }
+
+        else if (isBackward)
+        {
+            OneStepBack();   
+        }    
     }
 
-    public static void RestoreTimeFactor()
+    public void AddAgent(AgentController agent)
     {
-        Time.timeScale = 1f;
+        this.agents.Add(agent);
     }
 
-    public static void StopTime()
+    /// <summary>
+    /// The time starts
+    /// </summary>
+    public void Play()
     {
-        Time.timeScale = 0f;
+        this.isForward = true;
+        this.isBackward = false;
+        
+    }
+
+    /// <summary>
+    /// The time stops
+    /// </summary>
+    public void Stop()
+    {
+        this.isForward = false;
+        this.isBackward = false;
+    }
+
+    /// <summary>
+    /// The time goes backwards
+    /// </summary>
+    public void Backward()
+    {
+        this.isForward = false;
+        this.isBackward = true;
+        
+    }
+
+    /// <summary>
+    /// The time goes one step forward
+    /// </summary>
+    public void OneStepForward()
+    {
+        if(time < int.MaxValue && allTransitionDone)
+        {
+            time++;
+            foreach (AgentController agent in agents)
+            {
+                agent.transitionDone = false;
+            }
+        }
+        
+    }
+
+    /// <summary>
+    /// The time goes one step back
+    /// </summary>
+    public void OneStepBack()
+    {
+        if(time > 0 && allTransitionDone)
+        {
+            time--;
+            foreach (AgentController agent in agents)
+            {
+                agent.transitionDone = false;
+            }
+        }
+        
     }
 
 }
