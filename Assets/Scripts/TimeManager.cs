@@ -2,101 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour {
-
-    public int time;
-
-    bool isForward = false;
-    bool isBackward = false;
-    bool allTransitionDone = false;
-
-    List<AgentController> agents = new List<AgentController>();
-
-    private void FixedUpdate()
+namespace Unicam.AgentSimulator.Scripts
+{
+    public class TimeManager : MonoBehaviour
     {
 
-        foreach(AgentController agent in agents)
+        List<AgentController> agents = new List<AgentController>();
+
+        public void AddAgent(AgentController a)
         {
-            allTransitionDone = agent.transitionDone;
-            if (!allTransitionDone)
-                break;
+            agents.Add(a);
         }
 
-        if (isForward)
+        /// <summary>
+        /// The time starts
+        /// </summary>
+        public void Play()
         {
-            OneStepForward();                
-        }
-
-        else if (isBackward)
-        {
-            OneStepBack();   
-        }    
-    }
-
-    public void AddAgent(AgentController agent)
-    {
-        this.agents.Add(agent);
-    }
-
-    /// <summary>
-    /// The time starts
-    /// </summary>
-    public void Play()
-    {
-        this.isForward = true;
-        this.isBackward = false;
-        
-    }
-
-    /// <summary>
-    /// The time stops
-    /// </summary>
-    public void Stop()
-    {
-        this.isForward = false;
-        this.isBackward = false;
-    }
-
-    /// <summary>
-    /// The time goes backwards
-    /// </summary>
-    public void Backward()
-    {
-        this.isForward = false;
-        this.isBackward = true;
-        
-    }
-
-    /// <summary>
-    /// The time goes one step forward
-    /// </summary>
-    public void OneStepForward()
-    {
-        if(time < int.MaxValue && allTransitionDone)
-        {
-            time++;
+            Time.timeScale = 1f;
             foreach (AgentController agent in agents)
             {
-                agent.transitionDone = false;
+                agent.GetComponent<TimeController>().isReversing = false;
             }
-        }
-        
-    }
 
-    /// <summary>
-    /// The time goes one step back
-    /// </summary>
-    public void OneStepBack()
-    {
-        if(time > 0 && allTransitionDone)
+        }
+
+        /// <summary>
+        /// The time stops
+        /// </summary>
+        public void Stop()
         {
-            time--;
+            Time.timeScale = 0f;
+        }
+
+        /// <summary>
+        /// The time goes backwards
+        /// </summary>
+        public void Backward()
+        {
+            Time.timeScale = 1f;
             foreach (AgentController agent in agents)
             {
-                agent.transitionDone = false;
+                agent.GetComponent<TimeController>().isReversing = true;
             }
+
         }
-        
+
     }
 
 }
+
