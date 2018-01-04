@@ -262,14 +262,14 @@ __pycache__/
 
 #All what's about Unity, 3d models, heavy things...
 Assets/_Scenes
-Assets/_Animators
-Assets/_BusData
-Assets/_Icons
+Assets/Icons
 Assets/_Materials
-Assets/_Prefabs
+Assets/Prefabs
+Assets/Animators
 Assets/Mapbox
 *.meta
 *.asset
+*.prefab
 Library/
 ProjectSettings/
 Temp/

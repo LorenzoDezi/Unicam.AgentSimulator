@@ -7,7 +7,7 @@ namespace Unicam.AgentSimulator.Scripts
 {
     public class StopState : MonoBehaviour
     {
-
+        //The name of the bus stop
         public string Name;
 
     }

@@ -8,19 +8,25 @@ using UnityEngine;
 public class StreetMaker : MonoBehaviour {
 
     [SerializeField]
+    //The road-part prefab we will use to build the road
     GameObject prefabRoad;
 
     [SerializeField]
+    //The bus stop prefab 
     GameObject prefabStop;
 
     [SerializeField]
+    //input text file with bus route
     TextAsset busRouteText;
 
     [SerializeField]
+    //input text file with bus stop positions
     TextAsset stopRouteText;
 
+    //constant used in parsing the input text file
     char[] positionDelimiter = Environment.NewLine.ToCharArray();
 
+    //The edimburgh origin in UTM x,y coordinates. It will be used to adapt coordinates to the scene
     public static Vector2 EdinburghUTMOrigin = new Vector2(
                 383695.7f,
                 9647538f
@@ -36,6 +42,9 @@ public class StreetMaker : MonoBehaviour {
         
     }
 
+    /// <summary>
+    /// This method makes the street procedurally, using the input text file
+    /// </summary>
     private void CreateStreet()
     {
         string[] roadNodesSet = busRouteText.text.Split(positionDelimiter,
@@ -68,6 +77,9 @@ public class StreetMaker : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// This methods instantiate bus stops, at the positions given by the input text file
+    /// </summary>
     private void CreateStops()
     {
         string[] stopPositionSet = stopRouteText.text.Split(positionDelimiter,
@@ -149,8 +161,14 @@ public class StreetMaker : MonoBehaviour {
         //TODO: da vedere la rotazione come esce
         GameObject stop = GameObject.Instantiate(prefabStop, stopPosition, Quaternion.identity);
         stop.GetComponent<StopState>().Name = name;
+        //TODO: gestire meglio la posizione. Come farla vicina alla strada?
     }
 
+    /// <summary>
+    /// Instantiates a road piece, from start node to end node
+    /// </summary>
+    /// <param name="roadStart"></param>
+    /// <param name="roadEnd"></param>
     void CreateRoad(Vector3 roadStart, Vector3 roadEnd)
     {
         GameObject road = GameObject.Instantiate(prefabRoad);

@@ -64,7 +64,7 @@ namespace Unicam.AgentSimulator.Scripts
             return states.Keys.Count;
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
             rigidBody = this.GetComponent<Rigidbody>();
             timeController = this.GetComponent<TimeController>();
@@ -80,7 +80,7 @@ namespace Unicam.AgentSimulator.Scripts
             return;
         }
 
-        protected void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (states.TryGetValue(timeController.time, out currentAgentState) && !transitionDone)
             {

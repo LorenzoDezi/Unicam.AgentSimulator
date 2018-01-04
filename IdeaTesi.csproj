@@ -91,8 +91,6 @@
     <Compile Include="Assets\Scripts\Bus\StreetMaker.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
-    <Compile Include="Assets\Scripts\ProvaStrada\GroundClick.cs" />
-    <Compile Include="Assets\Scripts\ProvaStrada\NodeClick.cs" />
     <Compile Include="Assets\Scripts\TimeController.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
     <Compile Include="Assets\Utilities\UTMUtility.cs" />
