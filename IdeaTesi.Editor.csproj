@@ -5,17 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CA062282-AF14-73E9-E80A-E80ECA7E2E1D}</ProjectGuid>
+    <ProjectGuid>{8CAD1977-5CCC-DBEA-0E63-F5E3C91BD796}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp.dll</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor.dll</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
     <RootNamespace>Unicam.Simulator</RootNamespace>
@@ -53,14 +52,29 @@
     <Reference Include="UnityEngine">
       <HintPath>D:/Programmi/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>D:/Programmi/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
@@ -68,36 +82,102 @@
     <Reference Include="nunit.framework">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/Editor/UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>D:/Programmi/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>D:/Programmi/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>D:/Programmi/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Facebook.Extensions">
+      <HintPath>D:/Programmi/Unity/Editor/Data/PlaybackEngines/Facebook/UnityEditor.Facebook.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapbox.Json">
+      <HintPath>Assets/Mapbox/Core/Plugins/ThirdParty/Mapbox.Json/Net35/Mapbox.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Model\AgentState.cs" />
-    <Compile Include="Assets\Model\BusState.cs" />
-    <Compile Include="Assets\Scripts\AgentController.cs" />
-    <Compile Include="Assets\Scripts\Bus\StopState.cs" />
-    <Compile Include="Assets\Scripts\Bus\BusController.cs" />
-    <Compile Include="Assets\Scripts\Bus\BusInputController.cs" />
-    <Compile Include="Assets\Scripts\Bus\StreetMaker.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\InputController.cs" />
-    <Compile Include="Assets\Scripts\ProvaStrada\GroundClick.cs" />
-    <Compile Include="Assets\Scripts\ProvaStrada\NodeClick.cs" />
-    <Compile Include="Assets\Scripts\TimeController.cs" />
-    <Compile Include="Assets\Scripts\TimeManager.cs" />
-    <Compile Include="Assets\Utilities\UTMUtility.cs" />
+    <ProjectReference Include="IdeaTesi.csproj">
+      <Project>{CA062282-AF14-73E9-E80A-E80ECA7E2E1D}</Project>
+      <Name>IdeaTesi</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Mapbox\Unity\Editor\AddMonoBehavioursModifierDrawer.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\Build\Mapbox_Android_prebuild_checks.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\Build\Mapbox_iOS_build.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\ClearMbTilesCache.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\FactoryDrawer.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\FactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\FeatureBehaviourEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\FlatSphereTerrainFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\FlatTerrainFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\GeocodeAttributeDrawer.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\GeocodeAttributeSearchWindow.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\LayerModifierEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\LowPolyTerrainFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\MapImageFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\MapVisualizerEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\MapboxConfigurationWindow.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\MergedModifierStackEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\MeshFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\ModifierStackEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\NodeEditor\Connection.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\NodeEditor\ConnectionPoint.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\NodeEditor\EditorZoomArea.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\NodeEditor\Node.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\NodeEditor\NodeBasedEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\ScriptableCreatorWindow.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\StyleOptimizedVectorTileFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\StyleSearchAttributeDrawer.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\StyleSearchWindow.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\TerrainFactoryEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\Tests\DuplicateAndroidLibraries.cs.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\VectorLayerVisualizerEditor.cs" />
+    <Compile Include="Assets\Mapbox\Unity\Editor\VectorTileFactoryEditor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Mapbox\Fonts\OpenSansLic.txt" />
+    <None Include="Assets\Mapbox\README.txt" />
+    <None Include="Assets\Resources\Mapbox\MapboxConfiguration.txt" />
     <None Include="Assets\TextSamples\sampleAgent1.txt" />
     <None Include="Assets\TextSamples\sampleAgent2.txt" />
     <None Include="Assets\TextSamples\sampleAgent3.txt" />

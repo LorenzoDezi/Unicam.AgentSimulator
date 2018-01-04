@@ -87,7 +87,8 @@ namespace Unicam.AgentSimulator.Scripts
                 //With this line of code, we don't use physics - it works if the collider is set to isTrigger
                 //this.transform.position = currentAgentState.position;
                 rigidBody.velocity = (currentAgentState.position - transform.position).normalized * speed;
-                this.transform.forward = currentAgentState.direction;
+                if(currentAgentState.direction != Vector3.zero)
+                    this.transform.forward = currentAgentState.direction;
                 transitionTime -= Time.fixedDeltaTime;
 
             }
