@@ -7,12 +7,30 @@ using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts
 {
-    public class StreetMaker : MonoBehaviour
+
+    public class OrientedNode
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+
+        public OrientedNode(Vector3 position, Quaternion rotation)
+        {
+            this.position = position;
+            this.rotation = rotation;
+        }
+    }
+
+    public class StreetMaker2 : MonoBehaviour
     {
 
         [SerializeField]
         //The road-part prefab we will use to build the road
-        GameObject prefabRoad;
+        Material roadMaterial;
+
+        [SerializeField]
+        float maxNodeDistance = 100f;
+        [SerializeField]
+        float maxStopDistance = 100f;
 
         [SerializeField]
         //The bus stop prefab 
@@ -35,6 +53,8 @@ namespace Unicam.AgentSimulator.Scripts
                     9647538f
                 );
 
+        OrientedNode[] streetNodes;
+
 
         private void Awake()
         {
@@ -56,27 +76,43 @@ namespace Unicam.AgentSimulator.Scripts
             if (roadNodesSet.Length != 0)
             {
 
-                Vector3 startNode = new Vector3();
-                Vector3 endNode = new Vector3();
-                Vector3 previousEndNode = new Vector3();
-                for (int i = 0; i < roadNodesSet.Length; i += 2)
+                List<Vector3> streetNodes = new List<Vector3>();
+                List<OrientedNode> orientedStreetNodes = new List<OrientedNode>();
+                for (int i = 0; i < roadNodesSet.Length; i++)
                 {
-                    try
+                    Vector3 currentNode = this.GetNodePosition(roadNodesSet[i]);
+                   
+                    foreach(Vector3 node in streetNodes)
                     {
-                        startNode = this.GetNodePosition(roadNodesSet[i]);
-                        if (previousEndNode != new Vector3())
+                        //Solving overlapping textures problem
+                        if(Vector3.Distance(node, currentNode) < maxNodeDistance)
                         {
-                            this.CreateRoad(previousEndNode, startNode);
+                            currentNode.y += node.y;
                         }
-                        endNode = this.GetNodePosition(roadNodesSet[i + 1]);
-                        previousEndNode = endNode;
-                        this.CreateRoad(startNode, endNode);
                     }
-                    catch (IndexOutOfRangeException)
-                    {
-                        //Positions are odd and the last node position ends out of the position array
-                    }
+                    streetNodes.Add(currentNode);
                 }
+                Quaternion currentRotation;
+                for(int i=0; i < streetNodes.Count; i++)
+                {
+                    
+                    if(i == streetNodes.Count - 1)
+                    {
+                        currentRotation = Quaternion.identity;
+                    } else
+                    {
+                        currentRotation = Quaternion.LookRotation(streetNodes[i + 1]);
+                    }
+                    orientedStreetNodes.Add(new OrientedNode(streetNodes[i], currentRotation));
+                }
+                this.streetNodes = orientedStreetNodes.ToArray();
+                LineRenderer render = this.GetComponent<LineRenderer>();
+                render.useWorldSpace = true;
+                render.lightmapIndex = 0;
+                render.numCornerVertices = 5;
+                render.positionCount = streetNodes.Count - 1;
+                render.SetPositions(streetNodes.ToArray());
+                
             }
         }
 
@@ -93,8 +129,18 @@ namespace Unicam.AgentSimulator.Scripts
                 for (int i = 0; i < stopPositionSet.Length; i += 2)
                 {
                     Vector3 position = this.GetStopPosition(stopPositionSet[i]);
+                    Quaternion rotation = Quaternion.identity;
                     string name = this.GetStopName(stopPositionSet[i]);
-                    this.CreateStop(position, name);
+                    foreach(OrientedNode node in streetNodes)
+                    {
+                        if(Vector3.Distance(position, node.position) <= maxStopDistance)
+                        {
+                            position = node.position;
+                            rotation = node.rotation;
+                            break;
+                        }
+                    }
+                    this.CreateStop(position, rotation, name);
                 }
             }
         }
@@ -115,7 +161,8 @@ namespace Unicam.AgentSimulator.Scripts
                 if (positionValues.Length != 3)
                     throw new System.FormatException("Problem parsing position" + positionValues.Length);
                 positionValues = UTMUtility.ParseLongLatToUTM(positionValues, EdinburghUTMOrigin);
-                position = new Vector3(float.Parse(positionValues[0]), float.Parse(positionValues[1]), float.Parse(positionValues[2]));
+                position = new Vector3(float.Parse(positionValues[0]), 0.01f, float.Parse(positionValues[2]));
+
             }
             return position;
         }
@@ -159,69 +206,16 @@ namespace Unicam.AgentSimulator.Scripts
         /// </summary>
         /// <param name="stopPosition"> the position of the stop </param>
         /// <param name="name"> the name of the stop </param>
-        void CreateStop(Vector3 stopPosition, string name)
+        void CreateStop(Vector3 stopPosition, Quaternion rotation, string name)
         {
+            float roadWidth = this.GetComponent<LineRenderer>().startWidth;
             //TODO: da vedere la rotazione come esce
-            GameObject stop = GameObject.Instantiate(prefabStop, stopPosition, Quaternion.identity);
+            GameObject stop = GameObject.Instantiate(prefabStop, stopPosition, rotation);
             stop.GetComponent<StopState>().Name = name;
-            //TODO: gestire meglio la posizione. Come farla vicina alla strada?
+            //Setting graphics problems
+            stop.transform.Rotate(Vector3.up, 90);
+            stop.transform.position = new Vector3(stop.transform.position.x - roadWidth/2f - 4f, stop.transform.position.y + 0.02f, stop.transform.position.z);
         }
 
-        /// <summary>
-        /// Instantiates a road piece, from start node to end node
-        /// </summary>
-        /// <param name="roadStart"></param>
-        /// <param name="roadEnd"></param>
-        void CreateRoad(Vector3 roadStart, Vector3 roadEnd)
-        {
-            GameObject road = GameObject.Instantiate(prefabRoad);
-            road.transform.position = roadStart + new Vector3(0, 0.01f, 0);
-
-            road.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, roadStart - roadEnd);
-            float width = 1f;
-            float length = Vector3.Distance(roadStart, roadEnd);
-            if (length < 1)
-            {
-                return;
-            }
-
-            Mesh mesh = new Mesh();
-            Vector3[] vertices =
-            {
-            new Vector3(-width/2,0,0),
-            new Vector3(1-width/2,0,0),
-            new Vector3(1-width/2,0,length),
-            new Vector3(0-width/2,0,length)
-        };
-
-            int[] triangles =
-            {
-            2,1,0,
-            0,3,2
-        };
-
-            Vector2[] uv =
-            {
-            new Vector2(0,0),
-            new Vector2(1,0),
-            new Vector2(1,length),
-            new Vector2(0,length)
-        };
-
-            Vector3[] normals =
-            {
-            Vector3.up,
-            Vector3.up,
-            Vector3.up,
-            Vector3.up
-        };
-
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.uv = uv;
-            mesh.normals = normals;
-
-            road.GetComponent<MeshFilter>().mesh = mesh;
-        }
     }
-}
+    }

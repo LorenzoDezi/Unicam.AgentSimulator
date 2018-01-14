@@ -25,7 +25,7 @@ namespace Unicam.AgentSimulator.Scripts
 
 
 
-        private void Start()
+        private void Awake()
         {
             foreach (TextAsset text in texts)
             {

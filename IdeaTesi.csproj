@@ -13,8 +13,7 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
@@ -85,10 +84,14 @@
     <Compile Include="Assets\Model\AgentState.cs" />
     <Compile Include="Assets\Model\BusState.cs" />
     <Compile Include="Assets\Scripts\AgentController.cs" />
-    <Compile Include="Assets\Scripts\Bus\StopState.cs" />
+    <Compile Include="Assets\Scripts\Bus\BusCameraControl.cs" />
+    <Compile Include="Assets\Scripts\Bus\BusCameraFollow.cs" />
     <Compile Include="Assets\Scripts\Bus\BusController.cs" />
     <Compile Include="Assets\Scripts\Bus\BusInputController.cs" />
+    <Compile Include="Assets\Scripts\Bus\InterfaceController.cs" />
+    <Compile Include="Assets\Scripts\Bus\StopState.cs" />
     <Compile Include="Assets\Scripts\Bus\StreetMaker.cs" />
+    <Compile Include="Assets\Scripts\Bus\StreetMaker2.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
     <Compile Include="Assets\Scripts\TimeController.cs" />
