@@ -55,8 +55,8 @@ namespace Unicam.AgentSimulator.Scripts
 
                     }
                     GameObject agent = GameObject.Instantiate(agentPrefab, startPosition, Quaternion.identity);
-                    agent.transform.forward = startDirection;
-                    agent.GetComponent<AgentController>().SetStates(states);
+                    //agent.transform.forward = startDirection;
+                    this.SetStates(agent, states);
                     this.GetComponent<TimeManager>().AddAgent(agent.GetComponent<AgentController>());
 
                 }
@@ -72,6 +72,17 @@ namespace Unicam.AgentSimulator.Scripts
         protected virtual string[] SanitizePositionValues(string[] positionValues)
         {
             return positionValues;
+        }
+
+        /// <summary>
+        /// This method set an agent states. This can be overriden to perform different behaviours.
+        /// </summary>
+        /// <param name="agent"></param>
+        /// <param name="states"></param>
+        protected virtual void SetStates(GameObject agent, Dictionary<int, AgentState> states)
+        {
+            agent.GetComponent<AgentController>().SetStates(states);
+
         }
 
         /// <summary>
@@ -92,7 +103,9 @@ namespace Unicam.AgentSimulator.Scripts
                 string[] directionValues = propertyStrings[1].Split(valueDelimiter);
                 if (directionValues.Length != 3)
                     Debug.Log("Problem parsing direction" + directionValues.Length);
-                direction = new Vector3(float.Parse(directionValues[0]), float.Parse(directionValues[1]), float.Parse(directionValues[2]));
+                direction = new Vector3(float.Parse(directionValues[0]), 
+                    float.Parse(directionValues[1]), 
+                    float.Parse(directionValues[2]));
                 direction.Normalize();
             }
             if (propertyStrings.Length > 0)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unicam.AgentSimulator.Model;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Model.Bus
 {
     public class StopState : MonoBehaviour
     {

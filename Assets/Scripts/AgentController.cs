@@ -18,6 +18,8 @@ namespace Unicam.AgentSimulator.Scripts
         [SerializeField]
         protected float distanceTolerance = 0.1f;
 
+        
+
         /// <summary>
         /// A set of states linked to a moment in time. The int index represents the exact moment,
         /// the AgentState object the set of properties of the agent in that exact moment.
@@ -25,7 +27,7 @@ namespace Unicam.AgentSimulator.Scripts
         protected Dictionary<int, AgentState> states = new Dictionary<int, AgentState>();
 
         //This variable enables us to detect if there is a change of time or the simulation is paused.
-        public bool transitionDone = true;
+        public bool transitionDone = false;
         protected float transitionTime;
 
         /// <summary>
@@ -51,7 +53,11 @@ namespace Unicam.AgentSimulator.Scripts
             if (states.TryGetValue(0, out currentAgentState))
             {
                 this.transform.position = currentAgentState.position;
-                this.transform.forward = currentAgentState.direction;
+                //this.transform.forward = currentAgentState.direction;
+                if(states.TryGetValue(1, out currentAgentState))
+                {
+                    transitionDone = true;
+                }
             }
         }
 
@@ -69,7 +75,6 @@ namespace Unicam.AgentSimulator.Scripts
             rigidBody = this.GetComponent<Rigidbody>();
             timeController = this.GetComponent<TimeController>();
             transitionTime = timeoutTime;
-
         }
 
         /// <summary>
@@ -80,36 +85,59 @@ namespace Unicam.AgentSimulator.Scripts
             return;
         }
 
+        /// <summary>
+        /// This method update the direction of the agent.
+        /// </summary>
+        protected virtual void UpdateRotation()
+        {
+            if (currentAgentState.direction != Vector3.zero && !transitionDone)
+            {
+                transform.forward = currentAgentState.direction;
+            }
+            else if (!transitionDone)
+            {
+                transform.forward = (currentAgentState.position - transform.position).normalized;
+            }
+        }
+
+        /// <summary>
+        /// This method updates the position of the agent.
+        /// </summary>
+        protected virtual void UpdatePosition()
+        {
+            //With this line of code, we don't use physics - it works if the collider is set to isTrigger
+            //this.transform.position = currentAgentState.position;
+            if (!transitionDone)
+                rigidBody.velocity = (currentAgentState.position - transform.position).normalized * speed;
+            else
+                rigidBody.velocity = Vector3.zero;
+            rigidBody.isKinematic = transitionDone;
+        }
+
+
+
         protected virtual void FixedUpdate()
         {
             if (states.TryGetValue(timeController.time, out currentAgentState) && !transitionDone)
             {
-                //With this line of code, we don't use physics - it works if the collider is set to isTrigger
-                //this.transform.position = currentAgentState.position;
-                rigidBody.velocity = (currentAgentState.position - transform.position).normalized * speed;
-                if (currentAgentState.direction != Vector3.zero)
-                    this.transform.forward = currentAgentState.direction;
-                else
-                    this.transform.forward = (currentAgentState.position - transform.position).normalized;
-                transitionTime -= Time.fixedDeltaTime;
 
+                transitionTime -= Time.fixedDeltaTime;
             }
 
             if (Vector3.Distance(currentAgentState.position, transform.position) <= distanceTolerance)
             {
-                rigidBody.velocity = Vector3.zero;
                 transitionDone = true;
                 transitionTime = timeoutTime;
             }
             else if (transitionTime <= 0f)
             {
                 Debug.Log("Agent serial: " + this.gameObject.GetInstanceID() + " has failed updating its properties. Simulation broken.");
-                rigidBody.velocity = Vector3.zero;
                 transitionDone = true;
                 transitionTime = timeoutTime;
             }
+            UpdateRotation();
+            UpdatePosition();
 
-            rigidBody.isKinematic = transitionDone;
         }
 
     }

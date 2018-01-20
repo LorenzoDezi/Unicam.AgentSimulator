@@ -7,6 +7,7 @@ namespace Unicam.AgentSimulator.Model {
         /// <summary>
     /// An AgentState class represents a set of properties of the agent
     /// </summary>
+    [System.Serializable]
     public class AgentState
     {
 

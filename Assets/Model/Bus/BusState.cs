@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Model {
+namespace Unicam.AgentSimulator.Model.Bus {
 
     /// <summary>
     /// An AgentState struct represents a set of properties of the agent
