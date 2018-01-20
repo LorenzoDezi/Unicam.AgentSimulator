@@ -4,20 +4,18 @@ using System.Collections.Generic;
 using Unicam.AgentSimulator.Model;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Bus
 {
     public class BusController : AgentController
     {
-        Animator animator;
-        AudioSource audioSource;
 
+        AudioSource audioSource;
         BusDrive busDrive;
         AgentState nextAgentState;
 
         protected override void Start()
         {
             base.Start();
-            animator = this.GetComponent<Animator>();
             audioSource = this.GetComponent<AudioSource>();
             transform.LookAt(currentAgentState.position);
             busDrive = this.GetComponent<BusDrive>();
@@ -32,15 +30,11 @@ namespace Unicam.AgentSimulator.Scripts
         {
                 busDrive.ApplyMovement(transform.InverseTransformPoint(currentAgentState.position), 
                 transform.InverseTransformPoint(nextAgentState.position));
-            
         }
 
         protected override void FixedUpdate()
         {
-            //Set the bus animation for the wheel motion
-            animator.SetFloat("speed", this.speed);
-            //The speed of the animation is directly linked to the speed of the bus
-            animator.speed = this.speed / 2;
+            //We recover the next agent state, to predict a strict curve
             states.TryGetValue(timeController.time + 1, out nextAgentState);
             //Play the sound effect
             if (speed != 0 && !audioSource.isPlaying)

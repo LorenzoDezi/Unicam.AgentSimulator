@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Bus
 {
     public class InterfaceController : MonoBehaviour
     {

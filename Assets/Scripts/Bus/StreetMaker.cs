@@ -6,9 +6,13 @@ using Unicam.AgentSimulator.Scripts;
 using Unicam.AgentSimulator.Utility;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Bus
 {
-
+    /// <summary>
+    /// This class specifiy a node, giving it an orientation.
+    /// It is useful because it is used to place bus stops, and they need
+    /// to know the street orientation.
+    /// </summary>
     public class OrientedNode
     {
         public Vector3 position;
@@ -21,39 +25,37 @@ namespace Unicam.AgentSimulator.Scripts
         }
     }
 
-    public class StreetMaker2 : MonoBehaviour
+    public class StreetMaker : MonoBehaviour
     {
+        //The edimburgh origin in UTM x,y coordinates. It will be used to adapt coordinates to the scene
+        [NonSerialized]
+        public static Vector2 EdinburghUTMOrigin = new Vector2(
+                    383695.7f,
+                    9647538f
+                );
 
+        [Header("Scene build objects")]
         [SerializeField]
-        //The road-part prefab we will use to build the road
+        //The road-part material we will use to build the road
         Material roadMaterial;
-
-        [SerializeField]
-        float maxNodeDistance = 100f;
-        [SerializeField]
-        float maxStopDistance = 100f;
-
         [SerializeField]
         //The bus stop prefab 
         GameObject prefabStop;
 
+        [Header("Text files input")]
         [SerializeField]
         //input text file with bus route
         TextAsset busRouteText;
-
         [SerializeField]
         //input text file with bus stop positions
         TextAsset stopRouteText;
 
         //constant used in parsing the input text file
         char[] positionDelimiter = Environment.NewLine.ToCharArray();
-
-        //The edimburgh origin in UTM x,y coordinates. It will be used to adapt coordinates to the scene
-        public static Vector2 EdinburghUTMOrigin = new Vector2(
-                    383695.7f,
-                    9647538f
-                );
-
+        //Variables used in street making, used to solve graphic problems.
+        float maxNodeDistance = 100f;
+        float maxStopDistance = 100f;
+        //Street nodes, used to instantiate bus stops
         OrientedNode[] streetNodes;
 
 
@@ -85,7 +87,7 @@ namespace Unicam.AgentSimulator.Scripts
                    
                     foreach(Vector3 node in streetNodes)
                     {
-                        //Solving overlapping textures problem
+                        //Solving overlapping textures problem - texture height trick
                         if(Vector3.Distance(node, currentNode) < maxNodeDistance)
                         {
                             currentNode.y += node.y;
@@ -93,6 +95,7 @@ namespace Unicam.AgentSimulator.Scripts
                     }
                     streetNodes.Add(currentNode);
                 }
+
                 Quaternion currentRotation;
                 for(int i=0; i < streetNodes.Count; i++)
                 {

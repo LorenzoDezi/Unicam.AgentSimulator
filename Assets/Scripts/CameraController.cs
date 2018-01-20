@@ -4,35 +4,33 @@ namespace Unicam.AgentSimulator.Scripts
 {
     public class CameraController : MonoBehaviour
     {
-
+        [Header("Camera Parameters")]
         [SerializeField]
         private float panSpeed = 20f;
-
         //panBorderThickness is the limit at which the mouse position will make the camera 
         //updates the position
         [SerializeField]
         private float panBorderThickness = 10f;
-
+        //panLimit.x is for the x position of the camera, panLimit.y is for the z position of the camera
+        //it limits the possibilities for the user to move the camera around the simulation world.
+        [SerializeField]
+        private Vector2 panLimit;
         //scrollSpeed is the velocity of the zoom-in/zoom-out camera movement
         [SerializeField]
         private float scrollSpeed = 2f;
-
         //minY and maxY represents the minimum and maximum zoom capabilities of the camera
         [SerializeField]
         private float minY = 20f;
         [SerializeField]
         private float maxY = 120f;
 
-        //panLimit.x is for the x position of the camera, panLimit.y is for the z position of the camera
-        //it limits the possibilities for the user to move the camera around the simulation world.
-        [SerializeField]
-        private Vector2 panLimit;
+
 
         void LateUpdate()
         {
 
             Vector3 pos = transform.position;
-
+            //Camera control
             if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
             {
                 pos.z += panSpeed * Time.deltaTime;

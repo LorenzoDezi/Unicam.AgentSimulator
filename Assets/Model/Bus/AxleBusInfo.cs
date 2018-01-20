@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Unicam.Simulator.Model.Bus
+namespace Unicam.AgentSimulator.Model.Bus
 {
     /// <summary>
     /// An Axle is a pair of wheels in the bus. This class contains all the informations

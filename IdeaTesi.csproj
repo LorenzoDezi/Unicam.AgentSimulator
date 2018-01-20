@@ -13,7 +13,8 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
@@ -308,7 +309,7 @@
     <Compile Include="Assets\Scripts\Bus\BusDrive.cs" />
     <Compile Include="Assets\Scripts\Bus\BusInputController.cs" />
     <Compile Include="Assets\Scripts\Bus\InterfaceController.cs" />
-    <Compile Include="Assets\Scripts\Bus\StreetMaker2.cs" />
+    <Compile Include="Assets\Scripts\Bus\StreetMaker.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
     <Compile Include="Assets\Scripts\TimeController.cs" />

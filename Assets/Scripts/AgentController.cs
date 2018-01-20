@@ -8,37 +8,36 @@ namespace Unicam.AgentSimulator.Scripts
     public class AgentController : MonoBehaviour
     {
 
+
+
+        [Header("Agent Time Properties")]
         [SerializeField]
         public TimeController timeController;
-
         [SerializeField]
         protected float speed = 1f;
         [SerializeField]
         protected float timeoutTime = 3f;
         [SerializeField]
         protected float distanceTolerance = 0.1f;
+        protected float transitionTime;
+        public bool transitionDone = false;
 
-        
 
+        [Header("Agent States Properties")]
         /// <summary>
         /// A set of states linked to a moment in time. The int index represents the exact moment,
         /// the AgentState object the set of properties of the agent in that exact moment.
         /// </summary>
         protected Dictionary<int, AgentState> states = new Dictionary<int, AgentState>();
-
-        //This variable enables us to detect if there is a change of time or the simulation is paused.
-        public bool transitionDone = false;
-        protected float transitionTime;
-
-        /// <summary>
-        /// The agent rigidbody, where physics is applied.
-        /// </summary>
-        protected Rigidbody rigidBody;
-
         /// <summary>
         /// The current set of properties of the agent
         /// </summary>
         protected AgentState currentAgentState;
+
+
+
+
+
 
 
 
@@ -72,7 +71,6 @@ namespace Unicam.AgentSimulator.Scripts
 
         protected virtual void Start()
         {
-            rigidBody = this.GetComponent<Rigidbody>();
             timeController = this.GetComponent<TimeController>();
             transitionTime = timeoutTime;
         }
@@ -108,10 +106,10 @@ namespace Unicam.AgentSimulator.Scripts
             //With this line of code, we don't use physics - it works if the collider is set to isTrigger
             //this.transform.position = currentAgentState.position;
             if (!transitionDone)
-                rigidBody.velocity = (currentAgentState.position - transform.position).normalized * speed;
+                this.GetComponent<Rigidbody>().velocity = (currentAgentState.position - transform.position).normalized * speed;
             else
-                rigidBody.velocity = Vector3.zero;
-            rigidBody.isKinematic = transitionDone;
+                this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            this.GetComponent<Rigidbody>().isKinematic = transitionDone;
         }
 
 

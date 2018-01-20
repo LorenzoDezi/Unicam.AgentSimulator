@@ -8,18 +8,15 @@ namespace Unicam.AgentSimulator.Scripts
 {
     public class InputController : MonoBehaviour
     {
-
+        [Header("Agent parameters")]
         [SerializeField]
         protected UnityEngine.TextAsset[] texts;
         [SerializeField]
         protected GameObject agentPrefab;
-
         [SerializeField]
         protected char TabulationDelimiter = '\t';
-
         [SerializeField]
         protected char valueDelimiter = '-';
-
         [SerializeField]
         protected char[] timeDelimiter = Environment.NewLine.ToCharArray();
 
@@ -55,7 +52,7 @@ namespace Unicam.AgentSimulator.Scripts
 
                     }
                     GameObject agent = GameObject.Instantiate(agentPrefab, startPosition, Quaternion.identity);
-                    //agent.transform.forward = startDirection;
+                    agent.transform.forward = startDirection;
                     this.SetStates(agent, states);
                     this.GetComponent<TimeManager>().AddAgent(agent.GetComponent<AgentController>());
 

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unicam.AgentSimulator.Model.Bus;
-using Unicam.Simulator.Model.Bus;
 using System;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Bus
 {
     public class BusDrive : MonoBehaviour
     {
@@ -20,7 +19,7 @@ namespace Unicam.AgentSimulator.Scripts
         /// </summary>
         public AxleBusInfo motorAxleInfo;
 
-        [Header("Motor")]
+        [Header("Motor parameters")]
         /// <summary>
         /// Maximum torque the motor can apply to the wheels.
         /// </summary>
@@ -92,8 +91,8 @@ namespace Unicam.AgentSimulator.Scripts
                 if(nextWayPointDirection > 0.5f || nextWayPointDirection < -0.5f)
                 {
                     actualSteering = nextWayPointDirection * maxSteeringAngle;
-                    //DEBUG
-                    this.GetComponent<TimeController>().time++;
+                    //At this point the transition is at the next waypoint
+                    this.GetComponent<BusController>().transitionDone = true;
                 }
             }
             

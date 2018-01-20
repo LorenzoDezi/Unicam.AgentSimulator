@@ -5,10 +5,11 @@ using Unicam.AgentSimulator.Model;
 using Unicam.AgentSimulator.Utility;
 using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Bus
 {
     public class BusInputController : InputController
     {
+        [Header("Bus Agent Parameters")]
         /// <summary>
         /// This value indicates how many waypoint for each state.
         /// This is needed to give the bus IA a better trajectory.
@@ -58,7 +59,7 @@ namespace Unicam.AgentSimulator.Scripts
         protected override string[] SanitizePositionValues(string[] positionValues)
         {
             //We parse Longitude and latitued coordinates to UTM values
-            return UTMUtility.ParseLongLatToUTM(positionValues, StreetMaker2.EdinburghUTMOrigin);
+            return UTMUtility.ParseLongLatToUTM(positionValues, StreetMaker.EdinburghUTMOrigin);
         }
        
     }
