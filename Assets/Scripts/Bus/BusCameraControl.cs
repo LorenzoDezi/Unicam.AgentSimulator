@@ -8,15 +8,16 @@ namespace Unicam.AgentSimulator.Scripts.Bus
     {
         AudioSource cameraSwitchAudioSource;
 
-        GameObject[] busCameraObjects = new GameObject[3];
+        GameObject[] busCameraObjects;
         int currentCameraIndex;
         bool isBusMainView;
 
-        private void Start()
+        private void Awake()
         {
             //We retrieve every camera object the bus have in its children objects.
             Camera[] cameras = this.GetComponentsInChildren<Camera>();
-            for (int i = 0; i < 3; i++)
+            busCameraObjects = new GameObject[cameras.Length];
+            for (int i = 0; i < cameras.Length; i++)
             {
                 cameras[i].gameObject.SetActive(false);
                 busCameraObjects[i] = cameras[i].gameObject;
@@ -74,9 +75,11 @@ namespace Unicam.AgentSimulator.Scripts.Bus
         /// <param name="index"></param>
         public void SetActiveCamera(int index)
         {
+
             busCameraObjects[currentCameraIndex].SetActive(false);
             busCameraObjects[index].SetActive(true);
             currentCameraIndex = index;
+            
         }
     }
 }

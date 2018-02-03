@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Unicam.AgentSimulator.Scripts
 {
@@ -46,6 +47,22 @@ namespace Unicam.AgentSimulator.Scripts
                 agent.GetComponent<TimeController>().isReversing = true;
             }
 
+        }
+
+        /// <summary>
+        /// Restart the simulation
+        /// </summary>
+        public void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        /// <summary>
+        /// Escape from the simulation, back to the main menu
+        /// </summary>
+        public void Close()
+        {
+            SceneManager.LoadScene(0);
         }
 
     }

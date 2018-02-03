@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unicam.AgentSimulator.Model;
+using Unicam.AgentSimulator.Scripts.Bus;
+using Unicam.AgentSimulator.Scripts.Menu;
 using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts
@@ -9,10 +12,16 @@ namespace Unicam.AgentSimulator.Scripts
     public class InputController : MonoBehaviour
     {
         [Header("Agent parameters")]
+        //If true, text files are specified by paths - userInputObject
+        //else they are project assets - textAssets property
         [SerializeField]
-        protected UnityEngine.TextAsset[] texts;
+        bool inputFromUser = false;
+        [SerializeField]
+        protected TextAsset[] textAssets;
         [SerializeField]
         protected GameObject agentPrefab;
+
+        [Header("Text File Delimiters")]
         [SerializeField]
         protected char TabulationDelimiter = '\t';
         [SerializeField]
@@ -21,43 +30,62 @@ namespace Unicam.AgentSimulator.Scripts
         protected char[] timeDelimiter = Environment.NewLine.ToCharArray();
 
 
-
-        private void Awake()
+        void CreateAgent(string textFileContent)
         {
-            foreach (TextAsset text in texts)
+            //For each time value, there is a set of properties. The timeDelimiter chosen in the text 
+            //separates different time values.
+            string[] propertySets = textFileContent.Split(timeDelimiter,
+                StringSplitOptions.RemoveEmptyEntries);
+
+            if (propertySets.Length != 0)
             {
 
-                //For each time value, there is a set of properties. The timeDelimiter chosen in the text 
-                //separates different time values.
-                string[] propertySets = text.text.Split(timeDelimiter,
-                    StringSplitOptions.RemoveEmptyEntries);
-
-                if (propertySets.Length != 0)
+                Dictionary<int, AgentState> states = new Dictionary<int, AgentState>(propertySets.Length);
+                Vector3 startPosition = new Vector3();
+                Vector3 startDirection = new Vector3();
+                int index = 0;
+                foreach (string currentTimePropertySet in propertySets)
                 {
-
-                    Dictionary<int, AgentState> states = new Dictionary<int, AgentState>(propertySets.Length);
-                    Vector3 startPosition = new Vector3();
-                    Vector3 startDirection = new Vector3();
-                    int index = 0;
-                    foreach (string currentTimePropertySet in propertySets)
+                    AgentState state = this.CreateState(currentTimePropertySet);
+                    if (index == 0)
                     {
-                        AgentState state = this.CreateState(currentTimePropertySet);
-                        if (index == 0)
-                        {
-                            startPosition = state.position;
-                            startDirection = state.direction;
-                        }
-                        states.Add(index, state);
-                        index++;
-
+                        startPosition = state.position;
+                        startDirection = state.direction;
                     }
-                    GameObject agent = GameObject.Instantiate(agentPrefab, startPosition, Quaternion.identity);
-                    agent.transform.forward = startDirection;
-                    this.SetStates(agent, states);
-                    this.GetComponent<TimeManager>().AddAgent(agent.GetComponent<AgentController>());
+                    states.Add(index, state);
+                    index++;
+
+                }
+                GameObject agent = GameObject.Instantiate(agentPrefab, startPosition, Quaternion.identity);
+                agent.transform.forward = startDirection;
+                this.SetStates(agent, states);
+                this.GetComponent<TimeManager>().AddAgent(agent.GetComponent<AgentController>());
+
+            }
+        }
+
+        
+
+        void Start()
+        {
+            GameObject input = GameObject.FindGameObjectWithTag("Storage");
+            if(inputFromUser && input != null)
+            {
+                foreach(string path in input.GetComponent<UserInputStorage>().inputPaths)
+                {
+                    string content = File.ReadAllText(path);
+                    CreateAgent(content);
+                }
+
+            } else
+            {
+                foreach (TextAsset textAsset in textAssets)
+                {
+                    CreateAgent(textAsset.text);
 
                 }
             }
+            
         }
 
         /// <summary>
