@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unicam.AgentSimulator.Model.Bus;
+using Unicam.AgentSimulator.Scripts.Bus.Model;
 using System;
 
 namespace Unicam.AgentSimulator.Scripts.Bus

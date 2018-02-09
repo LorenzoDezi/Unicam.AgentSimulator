@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Unicam.AgentSimulator.Scripts
+namespace Unicam.AgentSimulator.Scripts.Demo
 {
     public class CameraController : MonoBehaviour
     {
