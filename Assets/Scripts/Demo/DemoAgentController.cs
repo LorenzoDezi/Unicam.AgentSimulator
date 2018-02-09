@@ -2,20 +2,33 @@
 using System.Collections.Generic;
 using Unicam.AgentSimulator.dll;
 using Unicam.AgentSimulator.dll.Model;
+using Unicam.AgentSimulator.Scripts.Demo.Model;
 using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts
 {
     public class DemoAgentController : AgentController
     {
+        [SerializeField]
+        protected float transitionTime;
+        [SerializeField]
+        protected float timeoutTime = 3f;
+
+        protected override void Start()
+        {
+            transitionTime = timeoutTime;
+            base.Start();
+        }
+
         protected override void UpdateProperties()
         {
             return;
         }
 
         
-        protected override void UpdateRotation()
+        void UpdateRotation()
         {
+            DemoAgentState currentAgentState = (DemoAgentState) this.currentAgentState; 
             if (currentAgentState.direction != Vector3.zero && !transitionDone)
             {
                 transform.forward = currentAgentState.direction;

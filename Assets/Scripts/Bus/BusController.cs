@@ -22,11 +22,6 @@ namespace Unicam.AgentSimulator.Scripts.Bus
             busDrive = this.GetComponent<BusDrive>();
         }
 
-        protected override void UpdateRotation()
-        {
-            //The rotation is applied in the BusDrive script.
-        }
-
         protected override void UpdatePosition()
         {
                 busDrive.ApplyMovement(transform.InverseTransformPoint(currentAgentState.position), 

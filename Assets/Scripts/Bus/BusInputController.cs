@@ -42,7 +42,7 @@ namespace Unicam.AgentSimulator.Scripts.Bus
                     {
 
                         currentPosition += directionVector / wayPointsForState;
-                        newStates.Add(j, new AgentState(currentPosition, new Vector3()));
+                        newStates.Add(j, new AgentState(currentPosition));
                         
                     }
 

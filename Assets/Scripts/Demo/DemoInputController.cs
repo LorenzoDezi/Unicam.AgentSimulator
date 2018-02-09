@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unicam.AgentSimulator.dll;
 using Unicam.AgentSimulator.dll.Model;
+using Unicam.AgentSimulator.Scripts.Demo.Model;
 using Unicam.AgentSimulator.Scripts.Menu;
 using UnityEngine;
 
@@ -64,7 +65,8 @@ namespace Unicam.AgentSimulator.Scripts
                 position = new Vector3(float.Parse(positionValues[0]), float.Parse(positionValues[1]), float.Parse(positionValues[2]));
             }
 
-            return new AgentState(position, direction);
+            DemoAgentState newState = new DemoAgentState(position, direction);
+            return newState;
         }
 
 
