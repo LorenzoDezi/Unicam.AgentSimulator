@@ -4,6 +4,7 @@ using Unicam.AgentSimulator.dll;
 using Unicam.AgentSimulator.dll.Model;
 using Unicam.AgentSimulator.Scripts.Demo.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Unicam.AgentSimulator.Scripts
 {
@@ -19,9 +20,19 @@ namespace Unicam.AgentSimulator.Scripts
         [Tooltip("Maximum time needed for an agent to fails a transition")]
         protected float timeoutTime = 3f;
 
+        [SerializeField]
+        [Tooltip("Text used to display last property update fail")]
+        Text ErrorText;
+
         protected override void Start()
         {
             transitionTime = timeoutTime;
+            if(ErrorText == null)
+            {
+                GameObject errorTextGameObject = GameObject.FindGameObjectWithTag("ErrorText");
+                if(errorTextGameObject != null)
+                    ErrorText = errorTextGameObject.GetComponent<Text>();
+            }
             base.Start();
         }
 
@@ -72,7 +83,10 @@ namespace Unicam.AgentSimulator.Scripts
             }
             else if (transitionTime <= 0f)
             {
-                Debug.Log("Agent serial: " + this.gameObject.GetInstanceID() + " has failed updating its properties. Simulation broken.");
+                ErrorText.text = "Agent serial: " 
+                    + this.gameObject.GetInstanceID() 
+                    + " has failed updating its properties." +
+                    " Simulation broken.";
                 TransitionDone = true;
                 transitionTime = timeoutTime;
             }

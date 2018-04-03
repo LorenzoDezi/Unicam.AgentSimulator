@@ -61,15 +61,13 @@ namespace Unicam.AgentSimulator.Scripts.Bus
 
         //Street nodes, used to instantiate bus stops
         OrientedNode[] streetNodes;
-
-        LineRenderer renderer;
+        LineRenderer streetRenderer;
 
 
         private void Awake()
         {
-
+            streetRenderer = this.GetComponent<LineRenderer>();
             CreateStreet();
-
             CreateStops();
 
         }
@@ -85,17 +83,16 @@ namespace Unicam.AgentSimulator.Scripts.Bus
             if (roadNodesSet.Length != 0)
             {
                 this.streetNodes = this.GetStreetNodes(roadNodesSet);
-                LineRenderer render = this.GetComponent<LineRenderer>();
-                render.useWorldSpace = true;
-                render.lightmapIndex = 0;
-                render.numCornerVertices = 5;
+                streetRenderer.useWorldSpace = true;
+                streetRenderer.lightmapIndex = 0;
+                streetRenderer.numCornerVertices = 5;
                 List<Vector3> positions = new List<Vector3>();
                 foreach(OrientedNode node in this.streetNodes)
                 {
                     positions.Add(node.position);
                 }
-                render.positionCount = positions.Count - 1;
-                render.SetPositions(positions.ToArray());
+                streetRenderer.positionCount = positions.Count - 1;
+                streetRenderer.SetPositions(positions.ToArray());
             }
         }
 

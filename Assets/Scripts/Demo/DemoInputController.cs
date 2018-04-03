@@ -7,6 +7,7 @@ using Unicam.AgentSimulator.dll.Model;
 using Unicam.AgentSimulator.Scripts.Demo.Model;
 using Unicam.AgentSimulator.Scripts.Menu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Unicam.AgentSimulator.Scripts
 {
@@ -21,6 +22,10 @@ namespace Unicam.AgentSimulator.Scripts
         [SerializeField]
         [Tooltip("Are text files specified by paths on a UserInputStorage script?")]
         bool inputFromUser = false;
+
+        [SerializeField]
+        [Tooltip("Interface text used to display format error in parsing agents")]
+        Text ErrorText;
        
 
         protected override void Start()
@@ -50,7 +55,7 @@ namespace Unicam.AgentSimulator.Scripts
             {
                 //TODO: Ritorna eccezione, gestita da CreateState - che andrà poi a popolare un file testo
                 //di errore.
-                Debug.Log("Problem parsing color" + colorValues.Length);
+                throw new FormatException("Problem parsing color at value position: " + colorValues.Length);
             }
             else
             {
@@ -65,7 +70,7 @@ namespace Unicam.AgentSimulator.Scripts
         {
             Vector3 direction = new Vector3();
             if (directionValues.Length != 3)
-                Debug.Log("Problem parsing direction" + directionValues.Length);
+                throw new FormatException("Problem parsing direction at value position: " + directionValues.Length);
             else
             {
                 direction = new Vector3(float.Parse(directionValues[0]),
@@ -80,7 +85,7 @@ namespace Unicam.AgentSimulator.Scripts
         {
             Vector3 position = new Vector3();
             if (positionValues.Length != 3)
-                throw new System.FormatException("Problem parsing position" + positionValues.Length);
+                throw new FormatException("Problem parsing position at value position: " + positionValues.Length);
             positionValues = this.SanitizePositionValues(positionValues);
             position = new Vector3(float.Parse(positionValues[0]), float.Parse(positionValues[1]), float.Parse(positionValues[2]));
             return position;
@@ -88,22 +93,25 @@ namespace Unicam.AgentSimulator.Scripts
         
         protected override AgentState CreateState(string currentTimePropertySet)
         {
-            //TODO: Aggiungi il try catch con l'eccezione per poi triggerare l'interfaccia
             string[] propertyStrings = currentTimePropertySet.Split(tabulationDelimiter);
 
             Vector3 position = new Vector3();
             Vector3 direction = new Vector3();
             Color color = new Color();
+            try
+            {
+                if (propertyStrings.Length > 2)
+                    color = this.GetColorFromInput(propertyStrings[2].Split(valueDelimiter));
 
-            if(propertyStrings.Length > 2)
-                color = this.GetColorFromInput(propertyStrings[2].Split(valueDelimiter));
+                if (propertyStrings.Length > 1)
+                    direction = this.GetDirectionFromInput(propertyStrings[1].Split(valueDelimiter));
 
-            if (propertyStrings.Length > 1)
-                direction = this.GetDirectionFromInput(propertyStrings[1].Split(valueDelimiter));
-
-            if (propertyStrings.Length > 0)
-                position = this.GetPositionFromInput(propertyStrings[0].Split(valueDelimiter));
-                
+                if (propertyStrings.Length > 0)
+                    position = this.GetPositionFromInput(propertyStrings[0].Split(valueDelimiter));
+            } catch (FormatException ex)
+            {
+                ErrorText.text = ex.Message;
+            }                
             DemoAgentState newState = new DemoAgentState(position, direction, color);
             return newState;
         }
