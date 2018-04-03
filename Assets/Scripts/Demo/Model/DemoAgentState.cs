@@ -12,10 +12,9 @@ namespace Unicam.AgentSimulator.Scripts.Demo.Model {
     [System.Serializable]
     public class DemoAgentState : AgentState
     {
-
         public Color color;
         public Vector3 direction;
-
+        
         public DemoAgentState(Vector3 position) : base(position)
         {
 
@@ -24,6 +23,12 @@ namespace Unicam.AgentSimulator.Scripts.Demo.Model {
         public DemoAgentState(Vector3 position, Vector3 direction) : base(position)
         {
             this.direction = direction;
+        }
+
+        public DemoAgentState(Vector3 position, Vector3 direction, Color color) : base(position)
+        {
+            this.direction = direction;
+            this.color = color;
         }
 
     }

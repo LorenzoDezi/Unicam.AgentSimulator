@@ -4,26 +4,30 @@ using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts.Menu
 {
+    /// <summary>
+    /// Used to store data between multiple scenes.
+    /// </summary>
     public class UserInputStorage : MonoBehaviour
     {
-
-        public static UserInputStorage storage;
-
-        public List<string> inputPaths;
+        [HideInInspector]
+        public static UserInputStorage Storage;
+        [HideInInspector]
+        
+        public List<string> InputPaths;
 
         void Awake()
         {
 
             //Applying singleton design pattern
-            if (storage == null)
+            if (Storage == null)
             {
-                storage = this;
+                Storage = this;
             }
-            else if (storage != this)
+            else if (Storage != this)
             {
-                this.inputPaths = storage.inputPaths;
-                Destroy(storage.gameObject);
-                storage = this;
+                this.InputPaths = Storage.InputPaths;
+                Destroy(Storage.gameObject);
+                Storage = this;
             }
             DontDestroyOnLoad(this.gameObject);
 

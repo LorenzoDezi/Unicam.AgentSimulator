@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 namespace Unicam.AgentSimulator.Scripts.Menu
 {
+    /// <summary>
+    ///  Script attached to the single agent element in the demo menu interface
+    /// </summary>
     public class AgentUIScript : MonoBehaviour
     {
         [SerializeField]
+        [Tooltip("The button in charge to remove the selected agent")]
         Button RemoveButton;
 
         [SerializeField]
+        [Tooltip("The filename of the agent")]
         Text AgentText;
 
         MenuManager menuManager;
@@ -26,11 +31,18 @@ namespace Unicam.AgentSimulator.Scripts.Menu
                 GetComponent<MenuManager>();
         }
 
+        /// <summary>
+        /// Sets the agent text
+        /// </summary>
+        /// <param name="text"></param>
         public void SetAgentText(string text)
         {
             this.AgentText.text = text;
         }
 
+        /// <summary>
+        /// Remove the agent from the user interface
+        /// </summary>
         public void RemoveAgent()
         {
             string nameAgentToRemove = AgentText.text;

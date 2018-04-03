@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts.Bus
 {
+    /// <summary>
+    /// Camera control in the Edinburgo Bus scene
+    /// </summary>
     public class BusCameraControl : MonoBehaviour
     {
         AudioSource cameraSwitchAudioSource;
-
         GameObject[] busCameraObjects;
         int currentCameraIndex;
-        bool isBusMainView;
 
         private void Awake()
         {
-            //We retrieve every camera object the bus have in its children objects.
+            //Retrieving every camera object the bus has in its children objects.
             Camera[] cameras = this.GetComponentsInChildren<Camera>();
             busCameraObjects = new GameObject[cameras.Length];
             for (int i = 0; i < cameras.Length; i++)
@@ -22,50 +23,29 @@ namespace Unicam.AgentSimulator.Scripts.Bus
                 cameras[i].gameObject.SetActive(false);
                 busCameraObjects[i] = cameras[i].gameObject;
             }
-            //Is this bus selected for main view?
-            isBusMainView = false;
             cameraSwitchAudioSource = this.GetComponents<AudioSource>()[1];
             //The index of the camera selected
             currentCameraIndex = 0;
         }
 
-        /// <summary>
-        /// Enable this bus to be the main view of the scene
-        /// </summary>
-        public void EnableCamera()
-        {
-            busCameraObjects[currentCameraIndex].SetActive(true);
-            isBusMainView = true;
-        }
-
-        /// <summary>
-        /// This bus is not the main view of the scene anymore.
-        /// </summary>
-        public void DisableCamera()
-        {
-            busCameraObjects[currentCameraIndex].SetActive(false);
-            isBusMainView = false;
-        }
-
         public void Update()
         {
-            if(isBusMainView)
+            if (Input.GetButtonDown("FirstPersonView"))
             {
-                if(Input.GetButtonDown("FirstPersonView"))
-                {
-                    cameraSwitchAudioSource.Play();
-                    this.SetActiveCamera(0);
+                cameraSwitchAudioSource.Play();
+                this.SetActiveCamera(0);
 
-                } else if(Input.GetButtonDown("ThirdPersonView"))
-                {
-                    cameraSwitchAudioSource.Play();
-                    this.SetActiveCamera(1);
+            }
+            else if (Input.GetButtonDown("ThirdPersonView"))
+            {
+                cameraSwitchAudioSource.Play();
+                this.SetActiveCamera(1);
 
-                } else if(Input.GetButtonDown("PerspectiveView"))
-                {
-                    cameraSwitchAudioSource.Play();
-                    this.SetActiveCamera(2);
-                }
+            }
+            else if (Input.GetButtonDown("PerspectiveView"))
+            {
+                cameraSwitchAudioSource.Play();
+                this.SetActiveCamera(2);
             }
         }
 
@@ -75,11 +55,12 @@ namespace Unicam.AgentSimulator.Scripts.Bus
         /// <param name="index"></param>
         public void SetActiveCamera(int index)
         {
-
+            if (index < 0 || index >= busCameraObjects.Length)
+                return;
             busCameraObjects[currentCameraIndex].SetActive(false);
             busCameraObjects[index].SetActive(true);
             currentCameraIndex = index;
-            
+
         }
     }
 }

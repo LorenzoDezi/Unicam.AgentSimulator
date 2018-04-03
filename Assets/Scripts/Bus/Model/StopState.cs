@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unicam.AgentSimulator.Model;
 using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts.Bus.Model
 {
+    /// <summary>
+    /// It represents the state of the bus stop.
+    /// </summary>
     public class StopState : MonoBehaviour
     {
         //The name of the bus stop

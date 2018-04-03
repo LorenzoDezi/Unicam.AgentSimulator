@@ -13,15 +13,19 @@ namespace Unicam.AgentSimulator.Scripts.Bus.Model
     [System.Serializable]
     public class AxleBusInfo
     {
+        [Tooltip("Bus left wheel")]
         public WheelCollider leftWheel;
+        [Tooltip("Bus left wheel mesh")]
         public GameObject leftWheelMesh;
+        [Tooltip("Bus right wheel")]
         public WheelCollider rightWheel;
+        [Tooltip("Bus right wheel mesh")]
         public GameObject rightWheelMesh;
 
-        //is the axle attached to the motor? 
+        [Tooltip("Is the axle attached to the motor?")]
         public bool motor;
 
-        //Does this wheel apply a steer angle?
+        [Tooltip("Does this wheel apply a steer angle?")]
         public bool steering;
 
     }

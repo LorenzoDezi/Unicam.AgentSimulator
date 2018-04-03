@@ -16,6 +16,7 @@ namespace Unicam.AgentSimulator.Scripts.Bus
         /// This is needed to give the bus IA a better trajectory.
         /// </summary>
         [SerializeField]
+        [Tooltip("Waypoints needed for the bus drive IA. More means more precision in trajectory")]
         int wayPointsForState = 10;
 
         protected override void SetStates(GameObject agent, Dictionary<int, AgentState> states)

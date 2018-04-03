@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Unicam.AgentSimulator.Scripts;
-using Unicam.AgentSimulator.Model;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -40,9 +38,9 @@ namespace Unicam.AgentSimulator.Scripts.Menu
 
         public void Start()
         {
-            if(storage.inputPaths.Count > 0)
+            if(storage.InputPaths.Count > 0)
             {
-                foreach(string path in storage.inputPaths)
+                foreach(string path in storage.InputPaths)
                 {
                     UpdateAgentUIAddPath(path);
                 }
@@ -57,7 +55,7 @@ namespace Unicam.AgentSimulator.Scripts.Menu
         public bool RemoveAgent(string agentName)
         {
             string pathToRemove = null;
-            foreach(string path in storage.inputPaths)
+            foreach(string path in storage.InputPaths)
             {
                 if(Path.GetFileName(path) == agentName)
                 {
@@ -67,8 +65,8 @@ namespace Unicam.AgentSimulator.Scripts.Menu
             }
             if(pathToRemove != null)
             {
-                storage.inputPaths.Remove(pathToRemove);
-                if(storage.inputPaths.Count == 0)
+                storage.InputPaths.Remove(pathToRemove);
+                if(storage.InputPaths.Count == 0)
                 {
                     //"No agents selected" displayed
                     defaultAgentUI.SetActive(true);
@@ -86,10 +84,11 @@ namespace Unicam.AgentSimulator.Scripts.Menu
         /// </summary>
         public void AddAgent()
         {
-            string path = EditorUtility.OpenFilePanel("Select a txt file", "", "txt");
+            string path = SFB.StandaloneFileBrowser.OpenFilePanel
+                ("Select a txt file", "", "txt", false)[0];
             if(path.Length != 0)
             {
-                storage.inputPaths.Add(
+                storage.InputPaths.Add(
                 path);
                 UpdateAgentUIAddPath(path);
             }

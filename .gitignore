@@ -266,6 +266,8 @@ Assets/Icons
 Assets/Images
 Assets/_Materials
 Assets/Prefabs
+Assets/StandaloneFileBrowser
+Assets/TextSamples
 Assets/Animators
 Assets/Mapbox
 *.meta

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Unicam.AgentSimulator.Utility
 {
+    /// <summary>
+    /// Utility used in the bus simulation to convert Geog coordinates to Universal Trasverse Marcator values.
+    /// </summary>
     public class UTMUtility
     {
         //Constants based on the WGS 84 Datum
@@ -14,6 +17,14 @@ namespace Unicam.AgentSimulator.Utility
         const float flattening = 0.0033528106643315515f;
         const float meridianScale = 0.9996f;
 
+        /// <summary>
+        /// It converts from <paramref name="latitude"/> and <paramref name="longitude"/>
+        /// to the corresponding x and y Universal Trasverse Marcator coordinates.
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public static void GeogToUTMConvert(float latitude, float longitude, out float x, out float y)
         {
             //Radian conversion
@@ -46,11 +57,24 @@ namespace Unicam.AgentSimulator.Utility
             y = (float)yDouble;
         }
 
+        /// <summary>
+        /// Converts from Degree to Radiant
+        /// </summary>
+        /// <param name="value"> Degrees </param>
+        /// <returns> Radiant </returns>
         private static double DegreeToRad(float value)
         {
             return (Math.PI / 180) * value;
         }
 
+        /// <summary>
+        /// Parse from <paramref name="positionValues"/> in longitude and latitude to 
+        /// new UTM position values. To avoid value too high for simulation, <paramref name="rifOrigin"/>
+        /// is used as a point of reference
+        /// </summary>
+        /// <param name="positionValues"> Longitude and Latitude position values </param>
+        /// <param name="rifOrigin"> The origin point for value resizing </param>
+        /// <returns>  </returns>
         public static string[] ParseLongLatToUTM(string[] positionValues, Vector2 rifOrigin)
         {
             float UTMXValue, UTMYValue;

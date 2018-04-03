@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unicam.AgentSimulator.Model;
+using Unicam.AgentSimulator.dll.Model;
 using UnityEngine;
 
 namespace Unicam.AgentSimulator.Scripts.Bus.Model {
@@ -11,7 +11,7 @@ namespace Unicam.AgentSimulator.Scripts.Bus.Model {
     public class BusState: AgentState
     {
 
-        public BusState(Vector3 position, Vector3 direction) : base(position, direction){
+        public BusState(Vector3 position) : base(position){
         }
 
     }
