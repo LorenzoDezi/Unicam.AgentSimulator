@@ -69,7 +69,6 @@ namespace Unicam.AgentSimulator.Scripts.Bus
             streetRenderer = this.GetComponent<LineRenderer>();
             CreateStreet();
             CreateStops();
-
         }
 
         /// <summary>
@@ -103,6 +102,7 @@ namespace Unicam.AgentSimulator.Scripts.Bus
         {
             string[] stopPositionSet = stopRouteText.text.Split(positionDelimiter,
                 StringSplitOptions.RemoveEmptyEntries);
+
             //Used as a max distance, between the stop position of the input text file and
             //the next node in the bus route input text file - to make the bus stop close to the road
             float maxStopDistance = 100f;

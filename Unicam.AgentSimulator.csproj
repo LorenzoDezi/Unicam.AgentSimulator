@@ -274,12 +274,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="Unicam.AgentSimulator.dll">
-      <HintPath>Assets/Unicam.AgentSimulator.dll.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>Assets/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/dezio/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -301,8 +295,19 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/dezio/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="Unicam.AgentSimulator.dll">
+      <HintPath>Assets/Libraries/Unicam.AgentSimulator.dll.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>Assets/Libraries/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Libraries\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
+    <Compile Include="Assets\Libraries\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
+    <Compile Include="Assets\Libraries\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
+    <Compile Include="Assets\Libraries\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
+    <Compile Include="Assets\Libraries\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\Bus\BusAgentController.cs" />
     <Compile Include="Assets\Scripts\Bus\BusCameraControl.cs" />
     <Compile Include="Assets\Scripts\Bus\BusCameraFollow.cs" />
@@ -319,14 +324,10 @@
     <Compile Include="Assets\Scripts\Menu\AgentUIScript.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Menu\UserInputStorage.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Utilities\UTMUtility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Libraries\Unicam.AgentSimulator.dll.xml" />
     <None Include="Assets\TextSamples\sampleAgent1.txt" />
     <None Include="Assets\TextSamples\sampleAgent2.txt" />
     <None Include="Assets\TextSamples\sampleAgent3.txt" />

@@ -23,9 +23,22 @@ namespace Unicam.AgentSimulator.Scripts.Bus.Model
             {
                 this.transform.position = new Vector3(-150.61f, 0.03f, -2698f);
                 this.transform.rotation = Quaternion.AngleAxis(-150.493f, Vector3.up);
-            } else if (this.Name.Contains("Drum") || this.Name.Contains("Place"))
+            } else if (this.Name.Contains("Drum"))
             {
-                this.transform.rotation = Quaternion.AngleAxis(92f, Vector3.up);
+                this.transform.position = new Vector3(-1128.68f,
+                    this.transform.position.y, this.transform.position.z);
+                this.transform.rotation = Quaternion.AngleAxis(96.6f, Vector3.up);
+            } else if (this.Name.Contains("Corner"))
+            {
+                this.transform.rotation = Quaternion.AngleAxis(94.8f, Vector3.up);
+            } else if (this.Name.Contains("Shandwick"))
+            {
+                this.transform.rotation = Quaternion.AngleAxis(-65.68f, Vector3.up);
+            } else if (this.Name.Contains("Coates"))
+            {
+                this.transform.position = new Vector3(-840.42f,
+                    this.transform.position.y, this.transform.position.z);
+                this.transform.rotation = Quaternion.AngleAxis(93f, Vector3.up);
             } 
         }
 

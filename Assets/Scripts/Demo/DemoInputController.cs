@@ -26,25 +26,30 @@ namespace Unicam.AgentSimulator.Scripts
         [SerializeField]
         [Tooltip("Interface text used to display format error in parsing agents")]
         Text ErrorText;
-       
 
         protected override void Start()
         {
             GameObject input = GameObject.FindGameObjectWithTag("Storage");
-            if(inputFromUser && input != null)
+            if (inputFromUser && input != null)
             {
-                foreach(string path in input.GetComponent<UserInputStorage>().InputPaths)
+                foreach (string path in input.GetComponent<UserInputStorage>().InputPaths)
                 {
                     string content = File.ReadAllText(path);
-                    
-                    CreateAgent(content);
+                    try
+                    {
+                        CreateAgent(content);
+                    }
+                    catch (FormatException ex)
+                    {
+                        ErrorText.text = Path.GetFileName(path) + " - " + ex.Message;
+                    }
                 }
-
-            } else
+            }
+            else
             {
                 base.Start();
             }
-            
+
         }
 
         Color GetColorFromInput(string[] colorValues)
@@ -53,8 +58,6 @@ namespace Unicam.AgentSimulator.Scripts
             //colorvalues follow RGBA, red green blue and alpha (transparency)
             if (colorValues.Length != 4)
             {
-                //TODO: Ritorna eccezione, gestita da CreateState - che andrà poi a popolare un file testo
-                //di errore.
                 throw new FormatException("Problem parsing color at value position: " + colorValues.Length);
             }
             else
@@ -90,7 +93,7 @@ namespace Unicam.AgentSimulator.Scripts
             position = new Vector3(float.Parse(positionValues[0]), float.Parse(positionValues[1]), float.Parse(positionValues[2]));
             return position;
         }
-        
+
         protected override AgentState CreateState(string currentTimePropertySet)
         {
             string[] propertyStrings = currentTimePropertySet.Split(tabulationDelimiter);
@@ -98,20 +101,16 @@ namespace Unicam.AgentSimulator.Scripts
             Vector3 position = new Vector3();
             Vector3 direction = new Vector3();
             Color color = new Color();
-            try
-            {
-                if (propertyStrings.Length > 2)
-                    color = this.GetColorFromInput(propertyStrings[2].Split(valueDelimiter));
 
-                if (propertyStrings.Length > 1)
-                    direction = this.GetDirectionFromInput(propertyStrings[1].Split(valueDelimiter));
+            if (propertyStrings.Length > 2)
+                color = this.GetColorFromInput(propertyStrings[2].Split(valueDelimiter));
 
-                if (propertyStrings.Length > 0)
-                    position = this.GetPositionFromInput(propertyStrings[0].Split(valueDelimiter));
-            } catch (FormatException ex)
-            {
-                ErrorText.text = ex.Message;
-            }                
+            if (propertyStrings.Length > 1)
+                direction = this.GetDirectionFromInput(propertyStrings[1].Split(valueDelimiter));
+
+            if (propertyStrings.Length > 0)
+                position = this.GetPositionFromInput(propertyStrings[0].Split(valueDelimiter));
+
             DemoAgentState newState = new DemoAgentState(position, direction, color);
             return newState;
         }

@@ -26,6 +26,7 @@ namespace Unicam.AgentSimulator.Scripts.Bus
             cameraSwitchAudioSource = this.GetComponents<AudioSource>()[1];
             //The index of the camera selected
             currentCameraIndex = 0;
+            this.SetActiveCamera(currentCameraIndex);
         }
 
         public void Update()
@@ -60,7 +61,6 @@ namespace Unicam.AgentSimulator.Scripts.Bus
             busCameraObjects[currentCameraIndex].SetActive(false);
             busCameraObjects[index].SetActive(true);
             currentCameraIndex = index;
-
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Unicam.AgentSimulator.Scripts.Bus
         float movementSmoothness = 0.6f;
         Vector3 BusCameraDistance;
 
-
         void Start()
         {
             BusCameraDistance = transform.position - BusTransform.position;

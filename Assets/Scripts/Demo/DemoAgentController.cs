@@ -20,19 +20,9 @@ namespace Unicam.AgentSimulator.Scripts
         [Tooltip("Maximum time needed for an agent to fails a transition")]
         protected float timeoutTime = 3f;
 
-        [SerializeField]
-        [Tooltip("Text used to display last property update fail")]
-        Text ErrorText;
-
         protected override void Start()
         {
             transitionTime = timeoutTime;
-            if(ErrorText == null)
-            {
-                GameObject errorTextGameObject = GameObject.FindGameObjectWithTag("ErrorText");
-                if(errorTextGameObject != null)
-                    ErrorText = errorTextGameObject.GetComponent<Text>();
-            }
             base.Start();
         }
 
@@ -78,20 +68,16 @@ namespace Unicam.AgentSimulator.Scripts
 
             if (Vector3.Distance(currentAgentState.position, transform.position) <= distanceTolerance)
             {
-                TransitionDone = true;
                 transitionTime = timeoutTime;
             }
             else if (transitionTime <= 0f)
             {
-                ErrorText.text = "Agent serial: " 
-                    + this.gameObject.GetInstanceID() 
-                    + " has failed updating its properties." +
-                    " Simulation broken.";
+                //The agent can't update its position to the next state
+                //it fails the transition
                 TransitionDone = true;
                 transitionTime = timeoutTime;
             }
-            UpdatePosition();
-            UpdateProperties();
+            base.FixedUpdate();
         }
 
     }
